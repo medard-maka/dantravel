@@ -1,51 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ma Boutique en Ligne</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 RFID Web Server</title>
+    <link href="entireframework.min.css" rel="stylesheet" type="text/css">
+    <link href="custom.css" rel="stylesheet" type="text/css">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Lato:400,500,600,700&display=swap");
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Lato", sans-serif;
+        }
+
+        .hero {
+            background: rgb(255, 2555);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 1em;
+            text-align: center;
+        }
+
+        .hero h1 {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-top: 0;
+            margin-bottom: 0.3em;
+            background-color: rgb(50, 120, 185);
+        }
+
+        .c4 {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .c4 h3 {
+            margin-top: 0;
+        }
+
+        .c4 a {
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /** RFID CSS ***/
+        .access {
+            padding: 1em;
+        }
+      
+
+        #access-id {
+            color: rgb(50, 120, 185);
+            display: none;
+        }
+
+        #access-denied,
+        #access-approve {
+            border-radius: 25px;
+            padding: 1em;
+            font-size: 3em;
+            color: #FFF;
+            display: none;
+        }
+
+        #access-denied {
+            background-color: red;
+        }
+
+        #access-approve {
+            background-color: green;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Ma Boutique en Ligne</h1>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="#">Accueil</a></li>
-      <li><a href="#">Produits</a></li>
-      <li><a href="#">Panier</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
-  <section id="hero">
-    <h2>Bienvenue dans notre boutique en ligne !</h2>
-    <p>Découvrez notre sélection d'articles de qualité.</p>
-    <a href="#" class="btn">Voir les produits</a>
-  </section>
-
-  <section id="products">
-    <h2>Nos Produits</h2>
-    <div class="product">
-      <img src="product1.jpg" alt="Produit 1">
-      <h3>Nom du Produit 1</h3>
-      <p>Description du Produit 1</p>
-      <span class="price">$19.99</span>
-      <a href="#" class="btn">Ajouter au Panier</a>
+    <nav class="nav" tabindex="-1" onclick="this.focus()">
+        <div class="container">
+            <a class="pagename current" href="https://www.ista_server.com">www.ista_server.com</a>
+        </div>
+    </nav>
+    <button class="btn-close btn btn-sm">X</button>
+    <div class="container">
+        <div class="hero">
+            <img src="log\logo mushetu.jpg" alt="logo">
+            <h1>ISTA Web Server</h1>
+            <div class="access">
+                <p>Student ID:</p>
+                <h2 id="access-id">----</h2>
+            </div>
+            <div id="access-denied">
+                <p>carte non definie</p>
+            </div>
+            <div id="access-approve">
+                <p>carte reconnue</p>
+            </div>
+        </div>
     </div>
-    <div class="product">
-      <img src="product2.jpg" alt="Produit 2">
-      <h3>Nom du Produit 2</h3>
-      <p>Description du Produit 2</p>
-      <span class="price">$24.99</span>
-      <a href="#" class="btn">Ajouter au Panier</a>
-    </div>
-  </section>
+    <script>
+        window.addEventListener("load", onLoad);
 
-  <footer>
-    <p>&copy; 2023 Ma Boutique en Ligne. Tous droits réservés.</p>
-  </footer>
+        function onLoad() {
+            if (!!window.EventSource) {
+                var source = new EventSource("/events");
 
-  <script src="script.js"></script>
+                source.addEventListener(
+                    "open",
+                    function (e) {
+                        console.log("Events Connected");
+                    },
+                    false
+                );
+
+                source.addEventListener(
+                    "error",
+                    function (e) {
+                        if (e.target.readyState != EventSource.OPEN) {
+                            console.log("Events Disconnected");
+                        }
+                    },
+                    false
+                );
+
+                source.addEventListener(
+                    "message",
+                    function (e) {
+                        const message = JSON.parse(e.data);
+                        console.log(message);
+                        let accessId = document.getElementById("access-id");
+                        accessId.innerHTML = message.rfid_tag_id;
+                        accessId.style.display = 'block';
+
+                        let accessDenied = document.getElementById("access-denied")
+                        let accessApproved = document.getElementById("access-approve")
+
+                        let status = message.status;
+                        if (status) {
+                            accessDenied.style.display = 'none';
+                            accessApproved.style.display = 'block';
+                        } else {
+                            accessDenied.style.display = 'block';
+                            accessApproved.style.display = 'none';
+                        }
+                    },
+                    false
+                );
+
+                source.addEventListener(
+                    "myevent",
+                    function (e) {
+                        console.log("myevent", e.data);
+                    },
+                    false
+                );
+            }
+        }
+    </script>
 </body>
 </html>
