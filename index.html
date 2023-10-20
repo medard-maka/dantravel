@@ -1,159 +1,175 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ESP32 RFID Web Server</title>
-    <link href="entireframework.min.css" rel="stylesheet" type="text/css">
-    <link href="custom.css" rel="stylesheet" type="text/css">
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=Lato:400,500,600,700&display=swap");
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: "Lato", sans-serif;
-        }
+  <meta charset="UTF-8">
+  <title>Capteurs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Styles CSS pour les cartes de capteurs */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .hero {
-            background: rgb(255, 2555);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 1em;
-            text-align: center;
-        }
+    .sensor-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+    }
 
-        .hero h1 {
-            padding-top: 20px;
-            padding-bottom: 20px;
-            margin-top: 0;
-            margin-bottom: 0.3em;
-            background-color: rgb(50, 120, 185);
-        }
+    .sensor-card h2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
 
-        .c4 {
-            padding: 10px;
-            box-sizing: border-box;
-        }
+    .sensor-card h2 button {
+      border-radius: 90px;
+      border-color: #2196F3;
+      display: flex;
+      margin-left: 60px;
+      padding: 20px;
+      background-color: #2196F3;
+    }
 
-        .c4 h3 {
-            margin-top: 0;
-        }
+    .sensor-card h2 button a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
 
-        .c4 a {
-            margin-top: 10px;
-            display: inline-block;
-        }
+    .sensor-card h2 i {
+      margin-right: 10px;
+      font-size: 32px;
+    }
 
-        /** RFID CSS ***/
-        .access {
-            padding: 1em;
-        }
-      
+    .sensor-card p {
+      margin: 0;
+      font-size: 28px;
+      margin-left: 20px;
+    }
+    .home-icon {
+      color: #FF5722;
+    }
 
-        #access-id {
-            color: rgb(50, 120, 185);
-            display: none;
-        }
+    .temperature-icon {
+      color: #FF5722;
+    }
 
-        #access-denied,
-        #access-approve {
-            border-radius: 25px;
-            padding: 1em;
-            font-size: 3em;
-            color: #FFF;
-            display: none;
-        }
+    .oxygen-level-icon {
+      color: #4CAF50;
+    }
 
-        #access-denied {
-            background-color: red;
-        }
+    .blood-pressure-icon {
+      color: #2196F3;
+    }
 
-        #access-approve {
-            background-color: green;
-        }
-    </style>
+    .activity-icon {
+      color: #FFC107;
+    }
+
+    .heart-rate-icon {
+      color: #E91E63;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 20px;
+    }
+
+    h1 {
+      margin-top: 200px;
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+  </style>
 </head>
 <body>
-    <nav class="nav" tabindex="-1" onclick="this.focus()">
-        <div class="container">
-            <a class="pagename current" href="https://www.ista_server.com">www.ista_server.com</a>
-        </div>
-    </nav>
-    <button class="btn-close btn btn-sm">X</button>
-    <div class="container">
-        <div class="hero">
-            <img src="log\logomushetu.jpg" alt="logo">
-            <h1>ISTA Web Server</h1>
-            <div class="access">
-                <p>Student ID:</p>
-                <h2 id="access-id">----</h2>
-            </div>
-            <div id="access-denied">
-                <p>carte non definie</p>
-            </div>
-            <div id="access-approve">
-                <p>carte reconnue</p>
-            </div>
-        </div>
+  <h1><i class="fas fa-home home-icon"></i> Santé <span>à</span> domicile</h1>
+
+  <div class="container">
+    <div class="sensor-card" id="temperature-card">
+      <h2><i class="fas fa-thermometer temperature-icon"></i> Température</h2>
+      <p id="temperature-value">-</p>
+      
     </div>
-    <script>
-        window.addEventListener("load", onLoad);
 
-        function onLoad() {
-            if (!!window.EventSource) {
-                var source = new EventSource("/events");
+    <div class="sensor-card" id="oxygen-level-card">
+      <h2><i class="fas fa-lungs oxygen-level-icon"></i> Niveau d'oxygène</h2>
+      <p id="oxygen-level-value">-</p>
+      
+    </div>
 
-                source.addEventListener(
-                    "open",
-                    function (e) {
-                        console.log("Events Connected");
-                    },
-                    false
-                );
+    <div class="sensor-card" id="blood-pressure-card">
+      <h2><i class="fas fa-heartbeat blood-pressure-icon"></i> Pression artérielle</h2>
+      <p id="blood-pressure-value">-</p>
+      
+    </div>
 
-                source.addEventListener(
-                    "error",
-                    function (e) {
-                        if (e.target.readyState != EventSource.OPEN) {
-                            console.log("Events Disconnected");
-                        }
-                    },
-                    false
-                );
+    <div class="sensor-card" id="activity-card">
+      <h2><i class="fas fa-walking activity-icon"></i> Activité</h2>
+      <p id="activity-value">-</p>
+      
+    </div>
 
-                source.addEventListener(
-                    "message",
-                    function (e) {
-                        const message = JSON.parse(e.data);
-                        console.log(message);
-                        let accessId = document.getElementById("access-id");
-                        accessId.innerHTML = message.rfid_tag_id;
-                        accessId.style.display = 'block';
+    <div class="sensor-card" id="heart-rate-card">
+      <h2><i class="fas fa-heart heart-rate-icon"></i> Rythme cardiaque</h2>
+      <p id="heart-rate-value">-</p>
+      
+    </div>
 
-                        let accessDenied = document.getElementById("access-denied")
-                        let accessApproved = document.getElementById("access-approve")
+    <div class="sensor-card" id="soins-card">
+      <h2>
+        <button><a href="https://www.youtube.com/watch?v=D8LYb9JFeqw">Soins</a></button>
+        <button><a href="appel.html">Appeler</a></button>
+      </h2>
+    </div>
+  </div>
 
-                        let status = message.status;
-                        if (status) {
-                            accessDenied.style.display = 'none';
-                            accessApproved.style.display = 'block';
-                        } else {
-                            accessDenied.style.display = 'block';
-                            accessApproved.style.display = 'none';
-                        }
-                    },
-                    false
-                );
+  <script>
+    // Fonction pour mettre à jour les valeurs des cartes de capteurs
+    function updateSensorCard(cardId, value) {
+      const cardElement = document.getElementById(cardId);
+      const valueElement = cardElement.querySelector('p');
+      valueElement.textContent = value;
+    }
 
-                source.addEventListener(
-                    "myevent",
-                    function (e) {
-                        console.log("myevent", e.data);
-                    },
-                    false
-                );
-            }
-        }
-    </script>
+    // Fonction pour mettre à jour les valeurs des capteurs (exemple)
+    function simulateSensorData() {
+      const temperatureValue = Math.random() * 100;
+      const oxygenLevelValue = Math.random() * 100;
+      const bloodPressureValue = Math.random() * 100;
+      const activityValue = Math.random() * 100;
+      const heartRateValue = Math.random() * 100;
+
+      updateSensorCard("temperature-card", temperatureValue.toFixed(2) + " °C");
+      updateSensorCard("oxygen-level-card", oxygenLevelValue.toFixed(2) + " %");
+      updateSensorCard("blood-pressure-card", bloodPressureValue.toFixed(2) + " mmHg");
+      updateSensorCard("activity-card", activityValue.toFixed(2) + " %");
+      updateSensorCard("heart-rate-card", heartRateValue.toFixed(2) + " bpm");
+    }
+
+    // Simuler les données des capteurs toutes les 3 secondes
+    setInterval(simulateSensorData, 3000);
+  </script>
 </body>
 </html>
