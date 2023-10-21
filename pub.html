@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Messagerie</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 10px;
+    }
+
+    .message-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      overflow-y: scroll;
+      max-height: 400px;
+      scroll-behavior: smooth;
+    }
+
+    .message-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .message {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .message .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+
+    .message .text {
+      flex-grow: 1;
+      padding: 8px 12px;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+
+    .message .photo {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 10px;
+    }
+
+    .message.sent {
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      background-color: #dcf8c6;
+    }
+
+    footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      background-color: #f5f5f5;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer input[type="text"] {
+      flex-grow: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 20px;
+    }
+
+    footer .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background-color: #00af9c;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Messagerie</h1>
+    <div class="message-container" id="messageContainer">
+      <div class="message">
+        <div class="avatar"></div>
+        <div class="text">Bienvenue dans notre groupe !</div>
+      </div>
+      <div class="message">
+        <div class="avatar"></div>
+        <div class="text">Comment allez-vous ?</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <input type="text" id="textInput" placeholder="Message">
+    <label for="photoInput" class="button"><i class="fas fa-camera"></i></label>
+    <input type="file" id="photoInput" hidden>
+    <button class="button" id="sendButton"><i class="fas fa-paper-plane"></i></button>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var messageContainer = document.getElementById("messageContainer");
+      var textInput = document.getElementById("textInput");
+      var photoInput = document.getElementById("photoInput");
+      var sendButton = document.getElementById("sendButton");
+
+      sendButton.addEventListener("click", function() {
+        var messageText = textInput.value;
+        var messagePhoto = photoInput.files[0];
+
+        if (messageText || messagePhoto) {
+          sendMessage(messageText, messagePhoto);
+          textInput.value = "";
+          photoInput.value = "";
+        }
+      });
+
+      photoInput.addEventListener("change", function() {
+        var selectedFile = photoInput.files[0];
+        if (selectedFile) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            var messageText = "";
+            var messagePhoto = event.target.result;
+            sendMessage(messageText, messagePhoto);
+            photoInput.value = "";
+          };
+          reader.readAsDataURL(selectedFile);
+        }
+      });
+    }); // Ajout de cette accolade de fermeture
+
+    function sendMessage(text, photo) {
+      var message = document.createElement("div");
+      message.classList.add("message", "sent");
+
+      var avatar = document.createElement("div");
+      avatar.classList.add("avatar");
+
+      var messageText = document.createElement("div");
+      messageText.classList.add("text");
+      messageText.textContent = text;
+
+      if (photo) {
+        var image = document.createElement("img");
+        image.classList.add("photo");
+        image.src = URL.createObjectURL(photo);
+        message.appendChild(image);
+      }
+
+      message.appendChild(avatar);
+      message.appendChild(messageText);
+
+      messageContainer.appendChild(message);
+
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  </script>
+</body>
+</html>
