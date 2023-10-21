@@ -6,86 +6,87 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px 10px;
-    }
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
 
-    .message-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 10px;
-      background-color: #f5f5f5;
-      border-radius: 10px;
-      overflow-y: scroll;
-      max-height: 400px;
-      scroll-behavior: smooth;
-    }
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  overflow-y: scroll;
+  max-height: 400px;
+  scroll-behavior: smooth;
+}
 
-    .message-container::-webkit-scrollbar {
-      display: none;
-    }
+.message-container::-webkit-scrollbar {
+  display: none;
+}
 
-    .message {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-    }
+.message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
 
-    .message .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #ccc;
-    }
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
 
-    .message .text {
-      flex-grow: 1;
-      padding: 8px 12px;
-      background-color: #fff;
-      border-radius: 20px;
-    }
+.message .text {
+  flex-grow: 1;
+  padding: 8px 12px;
+  background-color: #fff;
+  border-radius: 20px;
+  font-size: 1.2em;
+}
 
-    .message .photo {
-      max-width: 200px;
-      max-height: 200px;
-      border-radius: 10px;
-    }
+.message .photo {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 0.5em;
+}
 
-    .message.sent {
-      flex-direction: row-reverse;
-      align-items: flex-start;
-      background-color: #dcf8c6;
-    }
+.message.sent {
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  background-color: #dcf8c6;
+}
 
-    footer {
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-      background-color: #f5f5f5;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #f5f5f5;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    footer input[type="text"] {
-      flex-grow: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 20px;
-    }
+footer input[type="text"] {
+  flex-grow: 1;
+  padding: 0.8em;
+  border: none;
+  border-radius: 1em;
+}
 
-    footer .button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      background-color: #00af9c;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
+footer .button {
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 1em;
+  background-color: #00af9c;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -94,7 +95,7 @@
     <div class="message-container" id="messageContainer">
       <div class="message">
         <div class="avatar"></div>
-        <div class="text">Bienvenue dans notre groupe !</div>
+        <div class="text">Bienvenue dans notre groupe joy to serve !</div>
       </div>
       <div class="message">
         <div class="avatar"></div>
