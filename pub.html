@@ -1,174 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Messagerie</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>JS - Joie de Servir</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* Styles CSS pour le site */
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0
+      height:100%;
+      width:100%;
+      padding:0;
+    }
+
     .container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px 10px;
-}
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-.message-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  overflow-y: scroll;
-  max-height: 400px;
-  scroll-behavior: smooth;
-}
+    .header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-.message-container::-webkit-scrollbar {
-  display: none;
-}
+    .content {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.message {
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-}
+    .donation-form {
+      margin-top: 20px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.message .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc;
-}
+    .donation-form h2 {
+      color: #ff6b9a; /* Couleur rose */
+    }
 
-.message .text {
-  flex-grow: 1;
-  padding: 8px 12px;
-  background-color: #fff;
-  border-radius: 20px;
-  font-size: 1.2em;
-}
+    .donation-form label {
+      font-weight: bold;
+      color: #555; /* Couleur du texte */
+    }
 
-.message .photo {
-  max-width: 100%;
-  max-height: 300px;
-  border-radius: 0.5em;
-}
+    .donation-form input[type="text"],
+    .donation-form input[type="email"],
+    .donation-form select,
+    .donation-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-.message.sent {
-  flex-direction: row-reverse;
-  align-items: flex-start;
-  background-color: #dcf8c6;
-}
+    .donation-form .submit-button {
+      display: inline-block;
+      background-color: #ff6b9a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
 
-footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  background-color: #f5f5f5;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .donation-form .submit-button:hover {
+      background-color: #ff4785;
+    }
 
-footer input[type="text"] {
-  flex-grow: 1;
-  padding: 0.8em;
-  border: none;
-  border-radius: 1em;
-}
-
-footer .button {
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 1em;
-  background-color: #00af9c;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>Messagerie</h1>
-    <div class="message-container" id="messageContainer">
-      <div class="message">
-        <div class="avatar"></div>
-        <div class="text">Bienvenue dans notre groupe joy to serve !</div>
-      </div>
-      <div class="message">
-        <div class="avatar"></div>
-        <div class="text">Comment allez-vous ?</div>
-      </div>
+    <header class="header">
+      <!-- Contenu de l'en-tête -->
+      <h1>JS - Joie de Servir</h1>
+    </header>
+
+    <div class="content">
+      <!-- Contenu principal du site -->
+      <h2>Bienvenue sur notre site</h2>
+      <p>Joy-to-serve-fondation-- <a href="+243 971 420 411"></a> --</p>
     </div>
+
+    <div class="donation-form">
+      <h2>Faire un don</h2>
+      <form action="process_donation.php" method="post">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" placeholder="Joytoserve3@gmail.com" required>
+
+        <label for="amount">Montant :</label>
+        <select id="amount" name="amount" required>
+          <option value="10">10$</option>
+          <option value="20">20$</option>
+          <option value="50">50$</option>
+          <option value="100">100$</option>
+        </select>
+
+        <label for="message">Message (facultatif) :</label>
+        <textarea id="message" name="message"></textarea>
+
+        <input type="submit" value="Faire un don" class="submit-button">
+      </form>
+    </div>
+
+    <footer class="footer">
+      <!-- Contenu du pied de page -->
+      <p>Tous droits réservés &copy;<a href="Joytoserve3@gmail.com"></a> 2023 JS - Joie de Servir</p>
+    </footer>
   </div>
-  <footer>
-    <input type="text" id="textInput" placeholder="Message">
-    <label for="photoInput" class="button"><i class="fas fa-camera"></i></label>
-    <input type="file" id="photoInput" hidden>
-    <button class="button" id="sendButton"><i class="fas fa-paper-plane"></i></button>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var messageContainer = document.getElementById("messageContainer");
-      var textInput = document.getElementById("textInput");
-      var photoInput = document.getElementById("photoInput");
-      var sendButton = document.getElementById("sendButton");
-
-      sendButton.addEventListener("click", function() {
-        var messageText = textInput.value;
-        var messagePhoto = photoInput.files[0];
-
-        if (messageText || messagePhoto) {
-          sendMessage(messageText, messagePhoto);
-          textInput.value = "";
-          photoInput.value = "";
-        }
-      });
-
-      photoInput.addEventListener("change", function() {
-        var selectedFile = photoInput.files[0];
-        if (selectedFile) {
-          var reader = new FileReader();
-          reader.onload = function(event) {
-            var messageText = "";
-            var messagePhoto = event.target.result;
-            sendMessage(messageText, messagePhoto);
-            photoInput.value = "";
-          };
-          reader.readAsDataURL(selectedFile);
-        }
-      });
-    }); // Ajout de cette accolade de fermeture
-
-    function sendMessage(text, photo) {
-      var message = document.createElement("div");
-      message.classList.add("message", "sent");
-
-      var avatar = document.createElement("div");
-      avatar.classList.add("avatar");
-
-      var messageText = document.createElement("div");
-      messageText.classList.add("text");
-      messageText.textContent = text;
-
-      if (photo) {
-        var image = document.createElement("img");
-        image.classList.add("photo");
-        image.src = URL.createObjectURL(photo);
-        message.appendChild(image);
-      }
-
-      message.appendChild(avatar);
-      message.appendChild(messageText);
-
-      messageContainer.appendChild(message);
-
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-  </script>
 </body>
 </html>

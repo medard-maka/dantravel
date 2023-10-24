@@ -3,97 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <title>JS - Joie de Servir</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-      .footer .social-link {
-      color: rgb(255, 255, 255);
-      font-size: 32px;
-      margin-right: 10px;
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
     }
-
-    .footer .social-link.facebook-icon {
-      color: blue;
-    }
-
-    .footer .social-link.instagram-icon {
-      color: rgb(225, 64, 64);
-    }
-
-    .footer .social-link.whatsapp-icon {
-      color: rgb(31, 182, 31);
-    }
-
-    .footer .social-link.twitter-icon {
-      color: rgb(17, 77, 208);
-    }
-
-    .footer .social-link.envelope-icon {
-      color: red;
-    }
-
-    .footer a {
+    
+    .header {
+      background-color: #87ceeb;
       color: white;
-      text-decoration: none;
-    }
-
-    .message {
       text-align: center;
-    }
-
-    .message a {
-      border: solid chartreuse;
-      text-decoration: none;
-      background-color: chartreuse;
-      border-radius: 10px;
-      padding: 10px 20px;
+      padding: 20px;
     }
 
     .content {
       max-width: 800px;
-      margin: 0 auto;
+      margin: 20px auto;
+      background-color: white;
       padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    #icon {
-      color: rgb(12, 225, 55);
+    .content h2 {
+      color: #ff6b9a;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
-    a {
+    .content p {
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .content ul {
+      list-style-type: disc;
+      margin-bottom: 15px;
+      padding-left: 20px;
+    }
+
+    .content li {
+      margin-bottom: 8px;
+    }
+
+    .content img {
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .content .cta-button {
+      display: inline-block;
+      background-color: #ff6b9a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
       text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
     }
 
-    /* Styles spécifiques pour les appareils mobiles */
-    @media only screen and (max-width: 600px) {
-      .footer .social-link {
-        font-size: 24px;
-      }
+    .content .cta-button:hover {
+      background-color: #ff4785;
+    }
 
-      .message a {
-        padding: 8px 16px;
-      }
+    .content .quote {
+      font-style: italic;
+      color: #555555;
+      margin-top: 30px;
+      border-left: 3px solid #ff6b9a;
+      padding-left: 10px;
+    }
+
+    .footer {
+      background-color: #87ceeb;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+    }
+
+    .footer .social-icons {
+      margin-top: 10px;
+    }
+
+    .footer .social-icons a {
+      color: white;
+      margin: 0 5px;
+      text-decoration: none;
+      font-size: 24px;
+    }
+    
+    .photo-list {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .photo-list .photo {
+      flex-basis: 30%;
+    }
+    
+    .photo-list img {
+      width: 100%;
+      border-radius: 5px;
     }
   </style>
 </head>
+
 <body>
-  <header class="bg-primary text-white text-center py-5">
-    <h1 class="display-4">JS - Joie de Servir</h1>
-    <p class="lead">Un groupe de jeunes dévoués à apporter de la joie aux orphelins</p>
-    <div class="footer">
-      <a href="tel:+243971420411" class="social-link"><i class="fas fa-phone-alt"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=100085356050322" class="social-link facebook-icon"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/joiedeservir" class="social-link instagram-icon"><i class="fab fa-instagram"></i></a>
-      <a href="+243971420411" class="social-link whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-      <a href="joytoservefondation3@gmail.com" class="social-link envelope-icon"><i class="far fa-envelope"></i></a>
-      <a href="https://www.twitter.com/joiedeservir" class="social-link twitter-icon"><i class="fab fa-twitter"></i></a>
-    </div>
+  <header class="header">
+    <h1>JS - Joie de Servir</h1>
+    <p>Un groupe de jeunes dévoués à apporter de la joie aux orphelins</p>
   </header>
 
-  <div class="content mt-5">
-    <h2 class="mb-4">À propos de nous</h2>
+  <div class="content">
+    <img src="log.jpg" alt="Image illustrative">
+
+    <h2>À propos de nous</h2>
     <p>Joie de Servir est un groupe de jeunes passionnés par l'idée d'apporter du bonheur et de la joie aux orphelins. Nous organisons régulièrement des visites dans des orphelinats pour passer du temps avec les enfants et leur offrir des moments de bonheur et de partage.</p>
 
-    <h2 class="mb-4">Nos objectifs</h2>
+    <h2>Nos objectifs</h2>
     <ul>
       <li>Apporter de la joie et de l'affection aux enfants orphelins</li>
       <li>Organiser des activités ludiques et éducatives pour les enfants</li>
@@ -101,27 +134,38 @@
       <li>Sensibiliser la société à la situation des orphelins</li>
     </ul>
 
-    <h2 class="mb-4">Comment vous pouvez nous aider</h2>
-    <p>Nous sommes toujours à la recherche de bénévoles engagés pour rejoindre notre équipe et participer à nos activités. Si vous souhaitez contribuer à notre cause, vous pouvez nous contacter via les coordonnéesfournies ci-dessus ou remplir le formulaire de contact sur notre site web.</p>
+    <a href="pub.html" class="cta-button">Faire un don</a>
 
-    <div class="message">
-      <p>Rejoignez-nous et ensemble, apportons de la joie aux enfants orphelins !</p>
-      <a href="pub.html">Contactez-nous</a>
+    <div class="quote">
+      <p>"Le bonheur n'est réel que lorsqu'il est partagé."</p>
+      <p>- Jon Krakauer</p>
+    </div>
+    
+    <Voici la suite du code HTML :
+
+
+div class="photo-list">
+      <div class="photo">
+        <img src="ts.jpg" alt="Photo 1">
+      </div>
+      <div class="photo">
+        <img src="logos.jpg" alt="Photo 2">
+      </div>
+      <div class="photo">
+        <img src="ptm.jpg" alt="Photo 3">
+      </div>
     </div>
   </div>
 
-  <footer class="bg-dark text-white text-center py-3">
-    <div class="footer">
-      <a href="tel:+243971420411" class="social-link"><i class="fas fa-phone-alt"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=100085356050322" class="social-link facebook-icon"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/joiedeservir" class="social-link instagram-icon"><i class="fab fa-instagram"></i></a>
-      <a href="+243971420411" class="social-link whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-      <a href="joytoservefondation3@gmail.com" class="social-link envelope-icon"><i class="far fa-envelope"></i></a>
-      <a href="https://www.twitter.com/joiedeservir" class="social-link twitter-icon"><i class="fab fa-twitter"></i></a>
+  <footer class="footer">
+    <p>© +243 971 420 411---- 2023 JS - Joie de Servir. Tous droits réservés.</p>
+    <div class="social-icons">
+      <a href="tel:+243 971 420 411" class="fab fa-whatsapp"></a>
+      <a href="https://web.facebook.com/people/Joy-to-serve-fondation/100085356050322/" class="fab fa-facebook-f"></a>
+      <a href="joytoserve" class="fab fa-twitter"></a>
+      <a href="joytoserve_fondation" class="fab fa-instagram"></a>
     </div>
-    <p>Tous droits réservés &copy; 2023 JS - Joie de Servir</p>
   </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  
 </body>
 </html>
