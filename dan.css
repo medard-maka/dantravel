@@ -1,0 +1,56 @@
+header{
+    width:auto ;
+    height: auto;
+    background-color: rgb(84, 147, 209);
+}
+header,h1{
+      
+    padding: 5px;
+    font-size: 70px;
+}
+span{
+    color: red;
+
+}
+a{
+    border-radius: 30px;
+    background-color: rgb(84, 147, 209);
+    padding: 20px;
+    margin-left: 40px;
+    text-decoration: none;
+    color: bisque;
+
+
+}
+a:hover{
+    color: darkred;
+}
+nav{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center
+    ;
+}
+.dan{
+display: flex;
+justify-content: center;
+
+}
+.dan img{
+    width: 350px;
+    height: 400px;
+    margin-left: 40px;
+    border-radius: 400px;
+    margin-bottom: 20px;
+}
+h2{font-style: italic;
+    font-size: 60px;
+    font-family: cochin;
+    text-align: center;
+}
+footer{ 
+    background-color: rgb(84, 147, 209);
+    text-align: center;
+    padding: 50PX;
+}
